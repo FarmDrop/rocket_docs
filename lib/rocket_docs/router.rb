@@ -71,7 +71,7 @@ module RocketDocs
       def route_controller(ch, r)
         cn = r.defaults[:controller]
         ch[cn] ||= {}
-        ch[cn][:path] ||= api_controller_paths(api_controllers([cn])).first
+        ch[cn][:path] ||= api_controller_paths(api_controllers([cn])).find { |p| p.include? cn }
         ch[cn][:actions] ||= {}
         route_action(ch[cn][:actions], r)
       end

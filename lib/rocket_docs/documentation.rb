@@ -42,6 +42,7 @@ module RocketDocs
       @controllers_in.each do |n, v|
         @controllers << Controller.new(n, v[:path], v[:actions], self)
       end
+      @controllers.sort_by! &:name
     end
   end
 end

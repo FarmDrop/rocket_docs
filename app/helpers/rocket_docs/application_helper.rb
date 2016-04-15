@@ -18,7 +18,7 @@ module RocketDocs
     end
 
     def web_safe(string)
-      string.to_s.humanize.gsub(/\s/, '').underscore
+      string.to_s.humanize.gsub(/\s/, '').gsub('::', '_').underscore
     end
   end
 end

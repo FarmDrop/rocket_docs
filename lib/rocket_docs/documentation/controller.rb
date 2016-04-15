@@ -32,7 +32,7 @@ module RocketDocs
 
       def name
         return unless @name
-        @name.split('/').last.sub('_controller', '').humanize
+        @name.split('/').reject { |n| n =~ /api|v\d+/ }.map { |n| n.sub('_controller', '') }.join(' :: ').humanize
       end
 
       def full_name
