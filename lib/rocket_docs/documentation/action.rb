@@ -23,7 +23,11 @@ module RocketDocs
 
       def description(method = default_method)
         desc = (@doc[method] && @doc[method]['DOC']) || @doc['DOC']
-        CommonMarker.render_html desc if desc
+        if desc
+          renderer = Redcarpet::Render::HTML.new
+          markdown_processor = Redcarpet::Markdown.new renderer
+          markdown_processor.render desc
+        end
       end
 
       def params(method = default_method)

@@ -4,7 +4,7 @@ require 'rocket_docs/engine'
 require 'rocket_docs/router'
 require 'rocket_docs/parser'
 require 'rocket_docs/documentation'
-require 'commonmarker'
+require 'redcarpet'
 
 module RocketDocs
   class << self
