@@ -3,5 +3,12 @@
     = render 'docs/rocket_docs/hash_param', hash: v, wrap: wrap ? "#{wrap}[#{k}]" : k
   - else
     tr
-      td = wrap ? "#{wrap}[#{k}]" : k
+      td
+        - if wrap
+          = wrap
+          code
+            = k
+        - else
+          code
+            = k
       td = v

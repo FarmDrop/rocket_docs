@@ -23,7 +23,7 @@ module RocketDocs
 
       def description(method = default_method)
         desc = (@doc[method] && @doc[method]['DOC']) || @doc['DOC']
-        RocketDocs.format_string(desc)
+        CommonMarker.render_html desc if desc
       end
 
       def params(method = default_method)

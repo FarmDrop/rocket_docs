@@ -15,10 +15,10 @@ RSpec.describe RocketDocs::Documentation::Action do
 
   describe '#description' do
     it 'returns the action\'s description for each method' do
-      desc = 'Praesent maximus, leo a maximus fringilla, urna felis '\
-             'sollicitudin<br>nunc, eu pulvinar est urna eu justo. Phasellus '\
-             'quis hendrerit nibh.<br>Praesent id nunc ac augue ultricies '\
-             'rutrum at vel quam.'
+      desc = "<p>Praesent maximus, leo a maximus fringilla, urna felis sollicitudin\nnunc, "\
+        "eu pulvinar est urna eu justo. Phasellus quis hendrerit nibh.</p>\n<p>Praesent id "\
+        "nunc ac augue ultricies rutrum at vel quam.</p>\n<ul>\n<li>list item\nwith an "\
+        "indent</li>\n<li>And another one</li>\n</ul>\n"
       expect(action.description('POST')).to eq desc
       expect(action.description('GET')).to eq desc
       expect(action.description('PUT')).to eq desc

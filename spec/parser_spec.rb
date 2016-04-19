@@ -8,7 +8,10 @@ Doc
   gravida convallis aliquam. Duis pellentesque bibendum ipsum, vel
   imperdiet metus tincidunt eget. Phasellus finibus elementum
   scelerisque.
+
   Hello there!
+
+  ## A markdown header
 EOF
   expected_show_comments = <<-EOF
 Doc
@@ -24,13 +27,17 @@ Params
     languages: string (coma separated list)
 EOF
   expected_new_comments = <<-EOF
-
 EOF
   expected_create_comments = <<-EOF
 Doc
   Praesent maximus, leo a maximus fringilla, urna felis sollicitudin
   nunc, eu pulvinar est urna eu justo. Phasellus quis hendrerit nibh.
+
   Praesent id nunc ac augue ultricies rutrum at vel quam.
+
+  * list item
+    with an indent
+  * And another one
 GET
   Params
     id: integer
@@ -110,8 +117,9 @@ EOF
       expect(comments).to eq(
         'DOC' => 'Praesent maximus, leo a maximus fringilla, urna felis '\
                  "sollicitudin\nnunc, eu pulvinar est urna eu justo. "\
-                 "Phasellus quis hendrerit nibh.\nPraesent id nunc ac augue "\
-                 'ultricies rutrum at vel quam.',
+                 "Phasellus quis hendrerit nibh.\n\nPraesent id nunc ac augue "\
+                 "ultricies rutrum at vel quam.\n\n* list item\n  with an indent\n"\
+                 "* And another one",
         'GET' => {
           'PARAMS' => {
             'id' => 'integer'

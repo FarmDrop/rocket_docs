@@ -9,6 +9,8 @@ module Api
       #
       #   Hello there!
       #
+      #   ## A markdown header
+      #
       def index
         puts 'Oh really?' if (true != false) # inline coments should be ignored
         exposes (0...1500).to_a.map do |_i|
@@ -48,7 +50,12 @@ module Api
       # Doc
       #   Praesent maximus, leo a maximus fringilla, urna felis sollicitudin
       #   nunc, eu pulvinar est urna eu justo. Phasellus quis hendrerit nibh.
+      #
       #   Praesent id nunc ac augue ultricies rutrum at vel quam.
+      #
+      #   * list item
+      #     with an indent
+      #   * And another one
       # GET
       #   Params
       #     id: integer

@@ -1,5 +1,22 @@
 module RocketDocs
   module Parser
+    class DocNode < String
+      def initialize
+        @stop_indentation = false
+        super
+      end
+
+      # Set this to true in a handler to ignore all indentation in the child
+      # text. Good for markdown formatting etc.
+      def stop_indentation!
+        @stop_indentation = true
+      end
+
+      def stop_indentation?
+        @stop_indentation
+      end
+    end
+
     class << self
       def comments_for_method(method_name, file_path)
         method_comments(file_path)[method_name.to_s]
@@ -53,32 +70,40 @@ module RocketDocs
         p.default do |parent, source|
           parent ||= {}
           words = source.split
-          keyword, key = words.first.upcase, words.first
-          if words.count == 1 && keywords.include?(keyword)
-            parent[keyword] = string_keywords.include?(keyword) ? '' : {}
-          elsif words.count == 1 && parent.is_a?(Hash)
-            parent[key] = {}
+          keyword, key = words.first.try(:upcase), words.first
+          if words.count == 1
+            if keyword == 'DOC'
+              parent[keyword] = DocNode.new.tap(&:stop_indentation!)
+            elsif keywords.include?(keyword)
+              parent[keyword] = string_keywords.include?(keyword) ? '' : {}
+            elsif words.count == 1 && parent.is_a?(Hash)
+              parent[key] = {}
+            end
           end
         end
       end
 
       def indentation_parser_leafs(p)
         p.on_leaf do |parent, source|
+          val = source
+          val.strip! unless parent.try(:stop_indentation?)
           case parent
           when String
             parent << "\n" if parent.length != 0
-            parent << source.try(:strip) || ''
+            parent << val
           when Hash
-            k, v = source.split(':', 2)
-            parent[k] = v ? v.try(:strip) : {}
+            k, val = source.split(':', 2)
+            val = val ? val.try(:strip) : {}
+            parent[k] = val
           end
+          val
         end
       end
 
       def extract_method_comment(line, comments = {}, temp_comment = [])
         return true unless valid_line?(line)
         if line =~ /^\s*def\s+\w+$/
-          comments[method_name(line)] = temp_comment.join("\n")
+          comments[method_name(line)] = temp_comment.join
           true
         else
           temp_comment << line
@@ -96,7 +121,9 @@ module RocketDocs
 
       def clean_comments(comments)
         comments.each do |k, v|
-          comments[k] = v.gsub(/^\s*#\s?/, '').gsub(/\n+/, "\n")
+          comments[k] = v.gsub(/(?<=\n|\A)\n? *# ?/, '') # Remove leading comment character
+                          .gsub(/\n+(?=\Z)/, "\n") # Remove trailing newlines
+                          .gsub(/(?<=\A)\n+/, '') # Remove leading newlines
         end
         comments
       end

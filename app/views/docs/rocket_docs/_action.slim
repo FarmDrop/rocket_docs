@@ -17,11 +17,12 @@
                   .col-xs-12
                     - if action.url(method)
                       h4 URL
-                      = action.url
+                      code
+                        = action.url
                   .col-xs-12
                     - if action.description(method)
                       h4 Description
-                      = simple_format(action.description(method))
+                      = action.description(method).html_safe
               .col-md-6
                 .row
                   .col-xs-12
