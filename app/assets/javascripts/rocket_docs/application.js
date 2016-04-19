@@ -12,8 +12,8 @@ $(document).ready(function () {
     var $modal = $(this);
     var $triggerButton = $(event.relatedTarget);
     var $testButton = $modal.find('.btn.try');
-    $modal.find('h4.modal-title').text('' +
-      $triggerButton.data('request-method') + ' ' + $triggerButton.data('url')
+    $modal.find('h4.modal-title').html('' +
+      $triggerButton.data('request-method') + ' <code>' + $triggerButton.data('url') + '</code>'
     );
     $modal.find('.modal-body').html(
       contentForModal(
@@ -37,7 +37,7 @@ $(document).ready(function () {
         var response = jqXHR.responseText;
 
         $response.html('');
-        $response.text(response);
+        $response.text(JSON.stringify(JSON.parse(response), null, 2));
         $(window).trigger('resize');
       });
     });

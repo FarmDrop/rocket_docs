@@ -49,3 +49,8 @@ body {
     transform: rotate(359deg);
   }
 }
+
+code.response {
+  overflow-x: scroll;
+  white-space: pre;
+}
