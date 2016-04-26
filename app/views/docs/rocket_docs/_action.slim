@@ -1,7 +1,8 @@
 .panel.panel-default
-  .panel-heading
-    h4.panel-title
-      = link_to "#{action.name}", "##{action_id(action)}", data: { toggle: 'collapse' }
+  = link_to "##{action_id(action)}", data: { toggle: 'collapse' } do
+    .panel-heading
+      h4.panel-title
+        = action.name
   .panel-collapse.collapse id="#{action_id(action)}"
     .panel-body
       ul.nav.nav-tabs

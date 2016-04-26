@@ -1,5 +1,9 @@
 head
   title = RocketDocs.title
+  javascript:
+    window.user_email = "#{current_user.try(:email)}";
+    window.user_token = "#{current_user.try(:authentication_token)}";
+
   = stylesheet_link_tag    "rocket_docs/application", media: "all"
   = javascript_include_tag "rocket_docs/application"
   meta name="viewport" content="width=device-width, initial-scale=1"

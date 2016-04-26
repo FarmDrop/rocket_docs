@@ -41,7 +41,7 @@ $(document).ready(function () {
         $(window).trigger('resize');
       }).fail(function(jqXHR, textStatus, error) {
         $response.html('');
-        $response.text(error);
+        $response.text(jqXHR.responseText);
       });
     });
   }).on('hidden.bs.modal', function () {
@@ -74,6 +74,10 @@ $(document).ready(function () {
 
     return {
       url: url,
+      headers: {
+        'X-User-Email': window.user_email,
+        'X-User-Token': window.user_token
+      },
       type: method,
       processData: processData,
       data: data
