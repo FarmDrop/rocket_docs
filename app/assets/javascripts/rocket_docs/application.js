@@ -39,6 +39,9 @@ $(document).ready(function () {
         $response.html('');
         $response.text(JSON.stringify(JSON.parse(response), null, 2));
         $(window).trigger('resize');
+      }).fail(function(jqXHR, textStatus, error) {
+        $response.html('');
+        $response.text(error);
       });
     });
   }).on('hidden.bs.modal', function () {
